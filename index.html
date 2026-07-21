@@ -334,7 +334,7 @@
     </table>
     <div class="empty" id="emptyState" style="display:none;">
       <h3>Пока ничего не найдено</h3>
-      <p>Заведите первую находку — она сразу попадёт в статистику и общий список.</p>
+      <p>Заведите первый баг — он сразу попадёт в статистику и общий список.</p>
       <button class="btn" id="emptyAddBtn">+ Новая ошибка</button>
     </div>
   </div>
@@ -679,7 +679,7 @@ function renderStats(){
   const oldestDays = oldestOpen ? Math.floor((Date.now() - new Date(oldestOpen.createdAt).getTime()) / (24*60*60*1000)) : null;
 
   $('#stats').innerHTML = `
-    <div class="stat"><div class="num mono">${total}</div><div class="label">Всего находок</div></div>
+    <div class="stat"><div class="num mono">${total}</div><div class="label">Всего багов</div></div>
     <div class="stat accent-red"><div class="num mono">${blockers}</div><div class="label">Открытых блокеров</div></div>
     <div class="stat"><div class="num mono">${inProgress}</div><div class="label">В работе сейчас</div></div>
     <div class="stat accent-green"><div class="num mono">${pct}%</div><div class="label">Исправлено</div></div>
