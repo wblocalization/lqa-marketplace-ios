@@ -2,7 +2,13 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="LQA iOS">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#6C0BA9">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>LQA-трекер магазина (iOS)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -304,6 +310,100 @@
   .access-note.alert .btn{display:inline-flex;}
 
   .footer-note{margin-top:28px; font-size:12px; color:var(--ink-soft); text-align:center;}
+
+  /* ---------- Пачка скриншотов ---------- */
+  .queue-badge{
+    display:none; margin-left:8px; vertical-align:middle;
+    font-family:'Inter',sans-serif; font-size:12px; font-weight:600;
+    color:var(--wb-purple); background:var(--wb-purple-soft); padding:3px 9px; border-radius:20px;
+  }
+  .queue-on .queue-badge{display:inline-block;}
+  #skipBtn{display:none;}
+  .queue-on #skipBtn{display:inline-flex;}
+  .queue-on #saveMoreBtn{display:none !important;}
+
+  /* ---------- iPhone / узкий экран ---------- */
+  .fab, .filters-toggle, .home-tip, .m-only{display:none;}
+  .home-tip.show{
+    display:flex; align-items:center; gap:10px; margin:0 0 14px; padding:10px 12px;
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; font-size:12.5px; color:var(--ink-soft);
+  }
+  .home-tip button{border:none; background:none; font-size:16px; color:var(--ink-soft); margin-left:auto; padding:4px;}
+  @media (pointer:coarse){ .kbd-hint{display:none;} }
+
+  @media (max-width:700px){
+    .wrap{padding:14px 14px 130px;}
+    header.top{padding-bottom:12px; margin-bottom:12px; gap:10px;}
+    h1{font-size:21px;}
+    .wb-badge{width:36px; height:36px; font-size:13px; border-radius:10px;}
+    #exportBtn, #newBugBtn, #batchBtn{display:none;}
+    .top-right .btn.small{padding:7px 10px; font-size:12px;}
+    .access-note{margin:0 0 12px; font-size:12px;}
+    .stats{margin-bottom:12px;}
+    .stat{padding:11px 13px;}
+    .stat .num{font-size:21px;}
+    .stat:nth-child(n+5){display:none;} /* на телефоне — только главное, чтобы список был ближе */
+
+    .toolbar select.filter{display:none; flex:1 1 calc(50% - 5px);}
+    .toolbar.open select.filter{display:block;}
+    .filters-toggle{display:inline-flex;}
+    .search-input, select.filter{font-size:16px;}
+
+    /* карточки вместо таблицы */
+    .table-shell{overflow:visible; border:none; background:transparent;}
+    table, tbody{display:block;}
+    thead{display:none;}
+    tbody tr{
+      display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px 10px;
+      grid-template-areas:"cat pr" "diff diff" "sec sec" "st as" "com com" "date act";
+      background:var(--paper-raised); border:1px solid var(--line); border-radius:12px;
+      padding:14px; margin-bottom:10px;
+    }
+    tbody tr:last-child{border-bottom:1px solid var(--line);}
+    tbody td{padding:0;}
+    td.c-lang{display:none;}
+    .m-only{display:inline;}
+    td.c-cat{grid-area:cat;} td.c-pr{grid-area:pr;} td.c-diff{grid-area:diff;}
+    td.c-sec{grid-area:sec; max-width:none;} td.c-st{grid-area:st;} td.c-as{grid-area:as; justify-self:end;}
+    td.c-com{grid-area:com; max-width:none;} td.c-date{grid-area:date; align-self:center;} td.c-act{grid-area:act;}
+    .diff{max-width:none; font-size:15px;}
+    .inline-select{font-size:13px; padding:7px 26px 7px 12px; max-width:100%;}
+    td.c-st, td.c-as{min-width:0;}
+    .icon-btn{width:38px; height:38px; font-size:16px;}
+
+    /* форма на весь экран, кнопки всегда под пальцем */
+    .overlay{padding:0;}
+    .modal{max-width:none; min-height:100%; border-radius:0; padding:0 16px; box-shadow:none;}
+    /* скриншот наверху: с телефона баг обычно начинается со скриншота, и его видно, пока заполняешь поля */
+    #bugForm{display:flex; flex-direction:column;}
+    #bugForm > .shot-field{order:-1;}
+    .modal-head{position:sticky; top:0; z-index:2; background:var(--paper-raised); padding:14px 0 10px; margin-bottom:6px;}
+    .modal-head h2{font-size:19px;}
+    .close-x{width:36px; height:36px;}
+    .field input[type=text], .field select, .field textarea{font-size:16px; padding:11px 12px;}
+    .priority-choice label{min-width:calc(50% - 4px); padding:11px 6px; font-size:13.5px;}
+    .char-bar button{min-width:42px; height:40px; font-size:18px;}
+    .shot-zone{padding:22px 14px; font-size:14px;}
+    .shot-zone{padding:12px;}
+    .shot-zone img{max-height:210px;}
+    .modal-actions{
+      position:sticky; bottom:0; z-index:2; background:var(--paper-raised);
+      margin:16px -16px 0; padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+      border-top:1px solid var(--line);
+    }
+    .modal-actions > div{width:100%; flex-wrap:nowrap !important;}
+    .modal-actions > div .btn{flex:1; justify-content:center; padding:12px 6px; font-size:14px;}
+    #deleteBtn{width:100%; justify-content:center;}
+
+    .fab{
+      display:flex; flex-direction:column; align-items:flex-end; gap:10px;
+      position:fixed; right:16px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:40;
+    }
+    .fab button{border:none; border-radius:30px; font-weight:600; box-shadow:0 8px 22px rgba(108,11,169,.32);}
+    .fab .fab-shots{height:46px; padding:0 18px; background:var(--paper-raised); color:var(--wb-purple); font-size:14.5px;}
+    .fab .fab-main{width:60px; height:60px; background:var(--wb-purple); color:#fff; font-size:30px; line-height:1;}
+    .overlay.open ~ .fab{display:none;}
+  }
 </style>
 </head>
 <body>
@@ -320,6 +420,7 @@
       <a class="btn ghost small" href="https://wiki.wb.ru/space/198/redakciy-wildberries-1/page/590/%F0%9F%93%9DShpargalka%20po%20kategoriyam%20LQA" target="_blank" rel="noopener">Шпаргалка по категориям</a>
       <a class="btn ghost small" href="https://docs.google.com/spreadsheets/d/1fM6w_rZQR283vtfihc5RuendMxgtfjrnbrFDN07-ATg/edit?hl=ru&gid=0#gid=0" target="_blank" rel="noopener">Google-таблица</a>
       <button class="btn ghost small" id="exportBtn">Скачать CSV</button>
+      <button class="btn ghost small" id="batchBtn" title="Выбрать несколько скриншотов — на каждый откроется своя форма">📷 Из скриншотов</button>
       <button class="btn" id="newBugBtn">+ Новый баг</button>
     </div>
   </header>
@@ -328,6 +429,11 @@
     <span id="accessNoteText">Таблица не работает или данные не грузятся?</span>
     <span><a id="appLink" href="#" target="_blank" rel="noopener">Откройте наше приложение</a>, войдите в Google-аккаунт и дайте разрешение, затем обновите эту страницу.</span>
     <button type="button" class="btn small" id="reloadBtn">Обновить страницу</button>
+  </div>
+
+  <div class="home-tip" id="homeTip">
+    <span>📲 Добавьте трекер на экран «Домой»: кнопка «Поделиться» → «На экран „Домой“». Он будет открываться как приложение.</span>
+    <button type="button" id="homeTipClose" aria-label="Скрыть">✕</button>
   </div>
 
   <div class="stats" id="stats"></div>
@@ -339,6 +445,7 @@
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="text" class="search-input" id="searchInput" placeholder="Поиск по разделу, тексту, комментарию…">
     </div>
+    <button type="button" class="btn ghost filters-toggle" id="filtersToggle">Фильтры</button>
     <select class="filter" id="fLanguage"><option value="">Любой язык</option></select>
     <select class="filter" id="fCategory"><option value="">Все категории</option></select>
     <select class="filter" id="fPriority"><option value="">Любой приоритет</option></select>
@@ -386,7 +493,7 @@
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="modal-head">
-      <h2 id="modalTitle">Новый баг</h2>
+      <h2><span id="modalTitle">Новый баг</span><span class="queue-badge" id="queueBadge"></span></h2>
       <button class="close-x" id="closeModal">✕</button>
     </div>
     <form id="bugForm">
@@ -432,7 +539,7 @@
       <div class="field-error" id="textError">Заполните хотя бы одно из полей: что было или что должно быть.</div>
       <div class="char-bar" id="charBar" title="Вставить букву в поле, где стоит курсор. С Shift — заглавную."></div>
 
-      <div class="field">
+      <div class="field shot-field">
         <label>Скриншот</label>
         <div class="shot-zone" id="shotZone">
           <div id="shotPlaceholder">Нажмите, чтобы выбрать файл, или вставьте скриншот из буфера (Ctrl+V)</div>
@@ -463,6 +570,7 @@
         <span class="kbd-hint" id="kbdHint">Ctrl+Enter — сохранить и завести следующий</span>
         <div style="display:flex; gap:10px; margin-left:auto; flex-wrap:wrap;">
           <button type="button" class="btn ghost" id="cancelBtn">Отмена</button>
+          <button type="button" class="btn ghost" id="skipBtn" title="Не заводить баг по этому скриншоту">Пропустить</button>
           <button type="submit" class="btn ghost" id="saveMoreBtn" title="Язык, категория и раздел сохранятся для следующего бага">Сохранить и добавить ещё</button>
           <button type="submit" class="btn" id="saveBtn">Сохранить</button>
         </div>
@@ -470,6 +578,12 @@
     </form>
   </div>
 </div>
+
+<div class="fab" id="fab">
+  <button type="button" class="fab-shots" id="fabShots">📷 Из скриншотов</button>
+  <button type="button" class="fab-main" id="fabNew" aria-label="Новый баг">+</button>
+</div>
+<input type="file" accept="image/*" multiple id="batchInput" style="display:none;">
 
 <div class="toast" id="toast"></div>
 
@@ -571,6 +685,7 @@ let formSnapshot = '';           // состояние формы при отк�
 let lastTextField = null;        // куда вставлять спецсимволы
 
 const $ = (sel) => document.querySelector(sel);
+const isTouch = matchMedia('(pointer:coarse)').matches;
 const tbody = $('#tbody');
 
 function readDraft(){
@@ -724,6 +839,8 @@ function updateCharBar(){
 function slug(s){ return s.replace(/\s+/g,'_'); }
 
 function render(){
+  const activeFilters = ['#fLanguage','#fCategory','#fPriority','#fStatus','#fAssignee','#fSection'].filter(sel=>$(sel).value).length;
+  $('#filtersToggle').textContent = activeFilters ? `Фильтры · ${activeFilters}` : 'Фильтры';
   renderStats();
   const q = $('#searchInput').value.trim().toLowerCase();
   const fl = $('#fLanguage').value, fc = $('#fCategory').value, fp = $('#fPriority').value, fs = $('#fStatus').value, fa = $('#fAssignee').value;
@@ -763,31 +880,31 @@ function render(){
   filtered.forEach(b=>{
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><span class="cat-badge">${escapeHtml(b.language||'—')}</span></td>
-      <td>
+      <td class="c-lang"><span class="cat-badge">${escapeHtml(b.language||'—')}</span></td>
+      <td class="c-cat">
         <span class="cat-badge">${escapeHtml(b.category)}</span>
         <span class="subcat">${escapeHtml(b.subcategory)}</span>
       </td>
-      <td class="loc-cell">
+      <td class="loc-cell c-sec">
         ${b.section ? `<span class="cat-badge">${escapeHtml(b.section)}</span>` : ''}
         <span class="subcat">${escapeHtml(b.location || (b.section ? '' : '—'))}</span>
       </td>
-      <td>
+      <td class="c-diff">
         <div class="diff">
           <span class="wrong">${escapeHtml(truncate(b.wrong,60))}</span>
           <span class="arrow">→</span>
           <span class="right">${escapeHtml(truncate(b.right,60))}</span>
         </div>
       </td>
-      <td>${inlineSelect('assignee', b.id, ASSIGNEES, b.assignee, true)}</td>
-      <td><span class="pill pr-${slug(b.priority||'')}">${escapeHtml(b.priority||'—')}</span></td>
-      <td>${inlineSelect('status', b.id, STATUSES, b.status, true)}</td>
-      <td class="comment-cell">
+      <td class="c-as">${inlineSelect('assignee', b.id, ASSIGNEES, b.assignee, true)}</td>
+      <td class="c-pr"><span class="pill pr-${slug(b.priority||'')}">${escapeHtml(b.priority||'—')}</span></td>
+      <td class="c-st">${inlineSelect('status', b.id, STATUSES, b.status, true)}</td>
+      <td class="comment-cell c-com">
         ${escapeHtml(truncate(b.comment,70))}
         ${b.managerComment ? `<span class="mgr"><b>Менеджер:</b> ${escapeHtml(truncate(b.managerComment,70))}</span>` : ''}
       </td>
-      <td class="loc-cell mono">${formatDate(b.createdAt)}</td>
-      <td>
+      <td class="loc-cell mono c-date">${b.language ? `<span class="m-only">${escapeHtml(b.language)} · </span>` : ''}${formatDate(b.createdAt)}</td>
+      <td class="c-act">
         <div class="row-actions">
           ${b.screenshotUrl ? `<button type="button" class="icon-btn shot-view" title="Посмотреть скриншот">📎</button>` : ''}
         </div>
@@ -940,7 +1057,7 @@ function openNew(keep){
   updatePriorityHint();
   formSnapshot = takeSnapshot();
   $('#overlay').classList.add('open');
-  (keep ? $('#fldWrong') : $('#fldLanguage')).focus();
+  if(!isTouch) (keep ? $('#fldWrong') : $('#fldLanguage')).focus(); // на телефоне фокус сразу открыл бы клавиатуру
 }
 function openEdit(id){
   const b = bugs.find(x=>x.id===id);
@@ -981,6 +1098,7 @@ function openEdit(id){
 function closeModal(force){
   if(!force && takeSnapshot() !== formSnapshot && !confirm('Закрыть без сохранения? Введённое пропадёт.')) return;
   $('#overlay').classList.remove('open');
+  endQueue();
 }
 
 function updatePriorityHint(){
@@ -1001,6 +1119,49 @@ $('#charBar').addEventListener('click', e=>{
   if(e.shiftKey) ch = ch.charAt(0).toUpperCase() + ch.slice(1);
   field.focus();
   field.setRangeText(ch, field.selectionStart, field.selectionEnd, 'end');
+});
+
+/* ---------------- Пачка скриншотов: по одному багу на каждый ---------------- */
+// Удобно с телефона: наснимать скриншотов по ходу проверки, потом выбрать их все разом
+let shotQueue = [];
+let queueTotal = 0;
+let queueActive = false;
+function startQueue(files){
+  shotQueue = [...files].filter(f => f.type.startsWith('image/'));
+  queueTotal = shotQueue.length;
+  if(queueTotal) nextFromQueue();
+}
+function nextFromQueue(keep){
+  if(!shotQueue.length){
+    closeModal(true);
+    showToast('Все скриншоты разобраны 🎉');
+    return;
+  }
+  queueActive = true;
+  openNew(keep);
+  $('#bugForm').classList.add('queue-on');
+  $('.modal').classList.add('queue-on');
+  $('#queueBadge').textContent = `${queueTotal - shotQueue.length + 1} из ${queueTotal}`;
+  $('#saveBtn').textContent = shotQueue.length > 1 ? 'Сохранить и дальше' : 'Сохранить';
+  attachShot(shotQueue.shift());
+  shotChanged = true; formSnapshot = takeSnapshot(); // сам скриншот — не повод переспрашивать при закрытии
+}
+function endQueue(){
+  if(!queueActive) return;
+  queueActive = false; shotQueue = []; queueTotal = 0;
+  $('#bugForm').classList.remove('queue-on');
+  $('.modal').classList.remove('queue-on');
+  $('#saveBtn').textContent = 'Сохранить';
+}
+$('#batchBtn').addEventListener('click', ()=> $('#batchInput').click());
+$('#fabShots').addEventListener('click', ()=> $('#batchInput').click());
+$('#batchInput').addEventListener('change', e=>{
+  startQueue(e.target.files);
+  e.target.value = '';
+});
+$('#skipBtn').addEventListener('click', ()=>{
+  nextFromQueue({language: $('#fldLanguage').value, category: $('#fldCategory').value,
+                 subcategory: $('#fldSubcategory').value, section: getSection(), location: $('#fldLocation').value.trim()});
 });
 
 /* ---------------- Screenshot handling ---------------- */
@@ -1057,6 +1218,8 @@ $('#shotRemove').addEventListener('click', ()=>{ pendingShot=null; shotChanged=t
 
 /* ---------------- Events ---------------- */
 $('#newBugBtn').addEventListener('click', ()=>openNew());
+$('#fabNew').addEventListener('click', ()=>openNew());
+$('#filtersToggle').addEventListener('click', ()=> $('.toolbar').classList.toggle('open'));
 $('#emptyAddBtn').addEventListener('click', ()=>openNew());
 $('#closeModal').addEventListener('click', ()=>closeModal());
 $('#cancelBtn').addEventListener('click', ()=>closeModal());
@@ -1175,7 +1338,8 @@ $('#bugForm').addEventListener('submit', async e=>{
   writeDraft(draft);
   showToast(isNew ? `Баг №${saved.num} добавлен` : 'Изменения сохранены');
   render();
-  if(addMore) openNew(draft);
+  if(queueActive) nextFromQueue(draft);
+  else if(addMore) openNew(draft);
   else closeModal(true);
 });
 
@@ -1222,6 +1386,22 @@ $('#lightbox').addEventListener('click', ()=> $('#lightbox').classList.remove('o
 
 /* ---------------- Boot ---------------- */
 initStaticSelects();
+if(isTouch){
+  $('#shotPlaceholder').textContent = 'Нажмите, чтобы выбрать скриншот из галереи';
+}
+if(matchMedia('(max-width:700px)').matches) $('#saveMoreBtn').textContent = '+ Ещё баг';
+// Подсказка «на экран Домой» — только в Safari на iPhone/iPad, пока трекер не добавлен и подсказку не закрыли
+(function(){
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const standalone = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  let hidden = false;
+  try{ hidden = localStorage.getItem('lqa-ios:homeTipHidden') === '1'; }catch(e){}
+  if(isIOS && !standalone && !hidden) $('#homeTip').classList.add('show');
+  $('#homeTipClose').addEventListener('click', ()=>{
+    $('#homeTip').classList.remove('show');
+    try{ localStorage.setItem('lqa-ios:homeTipHidden', '1'); }catch(e){}
+  });
+})();
 $('#appLink').href = SHEETS_ENDPOINT;
 $('#reloadBtn').addEventListener('click', ()=> location.reload());
 if(!endpointConfigured) showSetupBanner();
